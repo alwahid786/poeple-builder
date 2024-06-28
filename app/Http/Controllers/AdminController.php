@@ -85,6 +85,11 @@ class AdminController extends Controller
     {
         return view('pages.user.login');
     }
+    // user Feed data
+    public function feed()
+    {
+        return view('pages.user.feed');
+    }
     public function updateProfile(Request $request)
     {
         try {

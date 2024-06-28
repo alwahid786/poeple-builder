@@ -18,11 +18,12 @@ use App\Http\Controllers\WebsiteController;
 */
 
 
-// signup 
+// signup
 Route::any('user-signup', [AdminController::class, 'userCreateAccount'])->name('user.signup');
 
 // user login
 Route::get('/', [AdminController::class, 'userLoginForm'])->name('user.login');
+// Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
 Route::post('/login-post', [AdminController::class, 'userLoginPostReq']);
 // company login
 Route::any('company-login', [AdminController::class, 'companyLogin'])->name('company.login');
@@ -87,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // user
+    Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
     Route::post('watched-video', [CompanyController::class, 'watchedVideo'])->name('watched-video');
     Route::get('add-award', [UserController::class, 'addReward'])->name('add-award');
     Route::get('user-reward', [UserController::class, 'userReward']);
