@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
     // user
     Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
+    Route::post('/videos/watch', [AdminController::class, 'watchVideo'])->name('videos.watch');
     Route::post('watched-video', [CompanyController::class, 'watchedVideo'])->name('watched-video');
     Route::get('add-award', [UserController::class, 'addReward'])->name('add-award');
     Route::get('user-reward', [UserController::class, 'userReward']);

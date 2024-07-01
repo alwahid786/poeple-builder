@@ -18,6 +18,7 @@ use App\Models\Award;
 use App\Models\CompanyVideo;
 use App\Models\RepliedVideo;
 use App\Models\TermsAndConditions;
+use App\Models\RepliedVideoViews;
 use App\Models\UserAward;
 use App\Models\UserReply;
 use Illuminate\Support\Facades\DB;
@@ -95,16 +96,50 @@ class AdminController extends Controller
         $companyUsers = User::where('added_by', $companyId)->get();
         $companyVideoReplies = collect();
 
+        // if ($companyUsers->isNotEmpty()) {
+        //     foreach ($companyUsers as $companyUser) {
+        //         $replies = RepliedVideo::with('user')->where('user_id', $companyUser->id)->get();
+        //         $companyVideoReplies = $companyVideoReplies->merge($replies);
+        //     }
+        // }
         if ($companyUsers->isNotEmpty()) {
-            foreach ($companyUsers as $companyUser) {
-                $replies = RepliedVideo::with('user')->where('user_id', $companyUser->id)->get();
-                $companyVideoReplies = $companyVideoReplies->merge($replies);
-            }
+            $userIds = $companyUsers->pluck('id')->toArray();
+            $companyVideoReplies = RepliedVideo::with('user')
+            ->leftJoin('replied_video_views', function ($join) use ($userIds) {
+                $join->on('replied_videos.id', '=', 'replied_video_views.reply_video_id')
+                ->whereIn('replied_video_views.user_id', $userIds);
+            })
+                ->orderByRaw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END')
+                ->select('replied_videos.*', DB::raw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END AS is_watched'))
+                ->get();
         }
-
         // dd(json_decode($companyVideoReplies));
         return view('pages.user.feed', compact('company', 'companyUsers', 'companyVideoReplies'));
     }
+
+    // Watch video
+    public function watchVideo(Request $request)
+    {
+        $userId = auth()->id();
+        $videoId = $request->video_id;
+
+        // Check if the video has already been watched by this user
+        $watched = RepliedVideoViews::where('user_id', $userId)
+        ->where('reply_video_id', $videoId)
+        ->first();
+
+        if (!$watched) {
+            // Mark the video as watched
+            RepliedVideoViews::create([
+                'user_id' => $userId,
+                'reply_video_id' => $videoId,
+                'watched_at' => now(),
+            ]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
     public function updateProfile(Request $request)
     {
         try {

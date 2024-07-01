@@ -115,18 +115,22 @@
             @if(isset($companyVideoReplies) && $companyVideoReplies != null)
             @foreach($companyVideoReplies as $companyVideo)
             <div class="col-12 col-md-4 col-lg-3">
-                <video controls poster="{{$companyVideo['thumbnail']}}">
+                <video controls poster="{{$companyVideo['thumbnail']}}" data-video-id="{{$companyVideo['id']}}">
                     <source src="{{$companyVideo['video_path']}}">
                 </video>
                 <div class="d-flex justify-content-between align-items-end">
                     <div class="d-flex align-items-center" style="gap:0.5rem;">
-                        <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
+                        <img src="{{$companyVideo['user']['image']}}" alt="img">
                         <div>
                             <h3>{{$companyVideo['user']['name']}}</h3>
                             <span>Day 1 <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">cx</span></span>
                         </div>
                     </div>
+                    @if($companyVideo['is_watched'] == 1)
                     <div><i class="fas fa-eye"></i></div>
+                    @else
+                    <div><i class="fas fa-eye-slash"></i></div>
+                    @endif
                 </div>
             </div>
             @endforeach
@@ -137,7 +141,28 @@
 @endsection
 @section('admininsertjavascript')
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('video').on('play', function() {
+            var videoId = $(this).data('video-id');
+            $.ajax({
+                url: `{{ route('videos.watch')}}`,
+                type: 'POST',
+                data: {
+                    video_id: videoId,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Optionally update the UI to reflect the watched status
+                        console.log('Video marked as watched.');
+                    }
+                }
+            });
+        });
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const swiper = new Swiper(".swiper-container", {

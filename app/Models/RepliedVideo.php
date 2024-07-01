@@ -30,7 +30,7 @@ class RepliedVideo extends Model
         });
     }
 
-    
+
     public function scopeUserReplyAccess($query)
     {
         return $query->whereHas('user', function($query){
@@ -42,5 +42,10 @@ class RepliedVideo extends Model
                 });
             });
         });
+    }
+
+    public function views()
+    {
+        return $this->hasMany(RepliedVideoViews::class);
     }
 }
