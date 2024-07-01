@@ -67,8 +67,6 @@ class User extends Authenticatable
         return $value;
     }
 
-
-
     public function userCompany(){
         return $this->belongsTo(User::class, 'added_by');
     }

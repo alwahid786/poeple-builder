@@ -19,6 +19,7 @@ use App\Models\CompanyVideo;
 use App\Models\RepliedVideo;
 use App\Models\TermsAndConditions;
 use App\Models\UserAward;
+use App\Models\UserReply;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
@@ -85,10 +86,24 @@ class AdminController extends Controller
     {
         return view('pages.user.login');
     }
+
     // user Feed data
     public function feed()
     {
-        return view('pages.user.feed');
+        $companyId = auth()->user()->added_by;
+        $company = User::with('companyUsers')->find($companyId);
+        $companyUsers = User::where('added_by', $companyId)->get();
+        $companyVideoReplies = collect();
+
+        if ($companyUsers->isNotEmpty()) {
+            foreach ($companyUsers as $companyUser) {
+                $replies = RepliedVideo::with('user')->where('user_id', $companyUser->id)->get();
+                $companyVideoReplies = $companyVideoReplies->merge($replies);
+            }
+        }
+
+        // dd(json_decode($companyVideoReplies));
+        return view('pages.user.feed', compact('company', 'companyUsers', 'companyVideoReplies'));
     }
     public function updateProfile(Request $request)
     {
@@ -138,12 +153,12 @@ class AdminController extends Controller
                 }
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'user'])) {
                     $user_status = auth()->user()->status;
-                        if ($user_status != 0) {
-                            return redirect('user-dashboard')->with('success', 'You have logged in successfully.');
-                        } else {
-                            Auth::logout();
-                            return redirect()->route('user.login')->with('error', 'Your request is pending for approval. Please contact your company for further assistance.');
-                        }
+                    if ($user_status != 0) {
+                        return redirect('user-dashboard')->with('success', 'You have logged in successfully.');
+                    } else {
+                        Auth::logout();
+                        return redirect()->route('user.login')->with('error', 'Your request is pending for approval. Please contact your company for further assistance.');
+                    }
                 } else {
                     return redirect()->route('user.login')->with('error', 'wrong credientials');
                 }
@@ -169,7 +184,7 @@ class AdminController extends Controller
 
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'company'])) {
 
-                        return redirect('company-dashboard')->with('success', 'You have logged in successfully.');
+                    return redirect('company-dashboard')->with('success', 'You have logged in successfully.');
                 } else {
                     return redirect()->route('company.login')->with('error', 'wrong credientials');
                 }
@@ -196,7 +211,7 @@ class AdminController extends Controller
                 }
 
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'admin'])) {
-                        return redirect('dashboard')->with('success', 'You have logged in successfully.');
+                    return redirect('dashboard')->with('success', 'You have logged in successfully.');
                 } else {
                     return redirect()->route('admin.login')->with('error', 'wrong credientials');
                 }
@@ -431,7 +446,7 @@ class AdminController extends Controller
                 'id' => $request->company_id
             ], $data);
 
-            return redirect('dashboard')->with('success', 'Company Data '.$label.' Successfully.');
+            return redirect('dashboard')->with('success', 'Company Data ' . $label . ' Successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -505,7 +520,7 @@ class AdminController extends Controller
     {
         $data['videoCounts'] = $this->getTotalMaxVideos();
         $count = ($request->count ?? $data['videoCounts']['max']) - 1;
-        $data['d_no'] = $count+1;
+        $data['d_no'] = $count + 1;
         $data['videos'] = $this->getVideos($count);
         if ($request->ajax()) {
             return response()->json(view('pages.superadmin.partial-videos', $data)->render());
@@ -571,7 +586,7 @@ class AdminController extends Controller
                 'id' => $request->video_id
             ], $data);
 
-            return redirect('admin-video')->with('success', 'Video Data '.$label.' Successfully.');;
+            return redirect('admin-video')->with('success', 'Video Data ' . $label . ' Successfully.');;
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -677,7 +692,7 @@ class AdminController extends Controller
                 'id' => $request->reward_id
             ], $data);
 
-            return redirect('adminReward')->with('success', 'Reward Data '.$label.' successfully.');
+            return redirect('adminReward')->with('success', 'Reward Data ' . $label . ' successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

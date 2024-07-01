@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @extends('layouts.user.user-default')
 <style>
     body {
@@ -86,99 +87,23 @@
     <!-- cover -->
     <div class="cover w-100 d-flex align-items-center justify-content-center">
         <div class="d-flex flex-column align-items-center justify-content-center">
-            <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-            <h4>Company Name</h4>
-            <p>Employees: 23</p>
+            <img src="{{$company->image}}" alt="img">
+            <h4>{{$company->name}}</h4>
+            <p>Employees: {{count($companyUsers)}}</p>
         </div>
     </div>
     <div class="w-100 p-4">
         <!-- slider -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
+                @if(isset($companyUsers) && $companyUsers != null)
+                @foreach($companyUsers as $user)
                 <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
+                    <img src="{{$user->image}}" alt="img">
+                    <h3>{{$user->name}}</h3>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <h3>Full Name</h3>
-                </div>
+                @endforeach
+                @endif
             </div>
             <!-- navigation buttons -->
             <div class="swiper-button-prev"></div>
@@ -186,151 +111,26 @@
         </div>
 
         <!-- videos -->
-        <div class="videos d-flex flex-wrap align-items-center mt-4" style="gap:1.2rem;">
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
+        <div class="videos row mt-4" style="row-gap:1.2rem;">
+            @if(isset($companyVideoReplies) && $companyVideoReplies != null)
+            @foreach($companyVideoReplies as $companyVideo)
+            <div class="col-12 col-md-4 col-lg-3">
+                <video controls poster="{{$companyVideo['thumbnail']}}">
+                    <source src="{{$companyVideo['video_path']}}">
                 </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
+                <div class="d-flex justify-content-between align-items-end">
+                    <div class="d-flex align-items-center" style="gap:0.5rem;">
+                        <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
+                        <div>
+                            <h3>{{$companyVideo['user']['name']}}</h3>
+                            <span>Day 1 <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">cx</span></span>
+                        </div>
                     </div>
+                    <div><i class="fas fa-eye"></i></div>
                 </div>
             </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <video controls poster="https://i.ytimg.com/vi/j3gRSxB5OVg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJT1Oh9iriCOQz9L9oCkcead9_jA">
-                    <source src="">
-                </video>
-                <div class="d-flex align-items-center" style="gap:0.5rem;">
-                    <img src="https://asifzulfiqar.vercel.app/assets/images/asif.png" alt="img">
-                    <div>
-                        <h3>Full Name</h3>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+            @endif
         </div>
     </div>
 </section>
