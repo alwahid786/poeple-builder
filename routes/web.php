@@ -23,12 +23,17 @@ Route::any('user-signup', [AdminController::class, 'userCreateAccount'])->name('
 
 // user login
 Route::get('/', [AdminController::class, 'userLoginForm'])->name('user.login');
-// Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
-Route::post('/login-post', [AdminController::class, 'userLoginPostReq']);
+
 // company login
 Route::any('company-login', [AdminController::class, 'companyLogin'])->name('company.login');
+
 // admin login
 Route::any('admin-login', [AdminController::class, 'adminLogin'])->name('admin.login');
+
+// Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
+Route::post('/login-post', [AdminController::class, 'userLoginPostReq']);
+
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -87,26 +92,30 @@ Route::middleware(['auth'])->group(function () {
         Route::get('company-logout', [AdminController::class, 'companyLogout']);
     });
 
-    // user
-    Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
-    Route::post('/videos/watch', [AdminController::class, 'watchVideo'])->name('videos.watch');
-    Route::post('watched-video', [CompanyController::class, 'watchedVideo'])->name('watched-video');
-    Route::get('add-award', [UserController::class, 'addReward'])->name('add-award');
-    Route::get('user-reward', [UserController::class, 'userReward']);
-    Route::get('user-reply/{id}', [UserController::class, 'userReply']);
-    Route::get('user-review', [UserController::class, 'userReview']);
-    Route::get('user-dashboard', [UserController::class, 'userDashbaord'])->name('user-dashboard');
-    Route::get('user-video', [UserController::class, 'userVideo']);
-    Route::get('user-video-detail/{id}', [UserController::class, 'userVideoDetail']);
-    Route::get('user-privacy', [UserController::class, 'userPrivacy']);
-    Route::get('user-term', [UserController::class, 'userTerm']);
-    Route::any('user-help', [UserController::class, 'userHelp']);
-    Route::post('recorded-video', [UserController::class, 'recordedVideos'])->name('recorded-video');
-    Route::any('user-update-profile', [UserController::class, 'updateProfile']);
-    Route::any('reward', [UserController::class, 'rewardSpinner']);
+    Route::group(['middleware' => ['isUser']], function () {
+        // user
+        Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
+        Route::post('/videos/watch', [AdminController::class, 'watchVideo'])->name('videos.watch');
+        Route::post('watched-video', [CompanyController::class, 'watchedVideo'])->name('watched-video');
+        Route::get('add-award', [UserController::class, 'addReward'])->name('add-award');
+        Route::get('user-reward', [UserController::class, 'userReward']);
+        Route::get('user-reply/{id}', [UserController::class, 'userReply']);
+        Route::get('user-review', [UserController::class, 'userReview']);
+        Route::get('user-dashboard', [UserController::class, 'userDashbaord'])->name('user-dashboard');
+        Route::get('user-video', [UserController::class, 'userVideo']);
+        Route::get('user-video-detail/{id}', [UserController::class, 'userVideoDetail']);
+        Route::get('user-privacy', [UserController::class, 'userPrivacy']);
+        Route::get('user-term', [UserController::class, 'userTerm']);
+        Route::any('user-help', [UserController::class, 'userHelp']);
+        Route::post('recorded-video', [UserController::class, 'recordedVideos'])->name('recorded-video');
+        Route::any('user-update-profile', [UserController::class, 'updateProfile']);
+        Route::any('reward', [UserController::class, 'rewardSpinner']);
+    });
+
     // Route::any('update-spinner-status', [UserController::class, 'updateSpinnerStatus']);
+    Route::get('update-password', [UserController::class, 'updatePassword']);
 });
-Route::get('update-password', [UserController::class, 'updatePassword']);
+
 Route::post('storePassword', [UserController::class, 'storePassword']);
 Route::get('user-otp', [UserController::class, 'userOtp'])->name('user-otp');
 Route::get('reset-password', [UserController::class, 'resetPassword'])->name('reset-password');
