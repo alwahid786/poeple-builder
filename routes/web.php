@@ -39,7 +39,6 @@ Route::middleware(['auth'])->group(function () {
 
     //Admin
     Route::group(['middleware' => ['isAdmin']], function () {
-
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('admin-reward', [AdminController::class, 'reward']);
         Route::any('admin-update-profile', [AdminController::class, 'updateProfile']);
@@ -69,8 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('user-logout', [AdminController::class, 'userLogout']);
 
-
-
+    // company
     Route::group(['middleware' => ['isCompany']], function () {
         Route::get('company-dashboard', [CompanyController::class, 'companyDashboard']);
         Route::get('company-reward', [CompanyController::class, 'companyReward']);
@@ -91,9 +89,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('accept-user-status', [CompanyController::class, 'acceptUserStatus'])->name('accept-user-status');
         Route::get('company-logout', [AdminController::class, 'companyLogout']);
     });
-
+        
+    // user
     Route::group(['middleware' => ['isUser']], function () {
-        // user
         Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
         Route::post('/videos/watch', [AdminController::class, 'watchVideo'])->name('videos.watch');
         Route::post('watched-video', [CompanyController::class, 'watchedVideo'])->name('watched-video');

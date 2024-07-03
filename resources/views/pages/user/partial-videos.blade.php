@@ -4,7 +4,6 @@
 <div class="col-xl-4 col-sm-6 p-2">
     <div class="video-card-wrapper">
         <div class="video-card-img">
-
             <a href="{{url('/user-video-detail', ['id' => $video['id']])}}"><img src="{{$video['thumbnail'] ?? ''}}" alt="" /></a>
         </div>
         <div class="video-card-desc">

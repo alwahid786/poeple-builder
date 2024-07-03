@@ -161,7 +161,7 @@ class UserController extends Controller
     {
         try {
             $data['video'] = CompanyVideo::findOrFail($id);
-            $data['repliedVideo'] = RepliedVideo::UserReplyAccess()->where('video_id', $data['video']->id)->with('user')->paginate(6);
+            $data['repliedVideo'] = RepliedVideo::where([['video_id', $data['video']->id],["user_id",auth()->user()->id]])->with('user')->paginate(6);
             if ($request->ajax()) {
                 return response()->json(view('pages.user.partial-replies', ['videos' => $data['repliedVideo']])->render());
             }
@@ -302,8 +302,7 @@ class UserController extends Controller
     }
 
 
-    public
-    function getVideos($offset)
+    public function getVideos($offset)
     {
         $user_types = explode(',', User::where('id', auth()->user()->added_by)->value('daily_video_types'));
         $types = config('constants.VIDEO_TYPES_ARRAY');
@@ -360,10 +359,11 @@ class UserController extends Controller
             'video_id' => $data['video_id'],
             'video_path' => $data['video_path'],
             'user_id' => $data['user_id'],
-            'thumbnail' => $data['thumbnail']
+            'thumbnail' => $data['thumbnail'],
+            // 'day'=>$day
         ]);
         return $this->sendResponse('Your reply has been added successfully. Now Play for Prizes!');
-    }
+    }c
 
     public function GetDay()
     {

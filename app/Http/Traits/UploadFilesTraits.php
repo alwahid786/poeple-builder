@@ -125,11 +125,11 @@ trait UploadFilesTraits
          $counts = CompanyVideo::groupBy('daily_video_types')
         ->selectRaw('daily_video_types, count(*) as count')
         ->pluck('count', 'daily_video_types')
-    ->toArray();
-    $max = 0;
-    if(!empty($counts)){
-        $max = max(array_values($counts));
-    }
+        ->toArray();
+        $max = 0;
+        if(!empty($counts)){
+            $max = max(array_values($counts));
+        }
         return [
             'max' => $max,
             'categories' => $counts,

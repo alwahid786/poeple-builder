@@ -48,4 +48,8 @@ class RepliedVideo extends Model
     {
         return $this->hasMany(RepliedVideoViews::class);
     }
+
+    public function video(){
+        return $this->belongsTo(CompanyVideo::class);
+    }
 }

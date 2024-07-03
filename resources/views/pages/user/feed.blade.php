@@ -75,6 +75,10 @@
         border-radius: 50%;
     }
 
+    .video-user{
+        cursor: pointer !important;
+    }
+
     @media (max-width: 576px) {
         .flex-grow {
             flex-basis: unset;
@@ -96,9 +100,13 @@
         <!-- slider -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
+                <div class="swiper-slide video-user" data-user-id="0">
+                    <img src="https://cdn-icons-png.flaticon.com/512/33/33308.png" alt="img">
+                    <h3>All</h3>
+                </div>
                 @if(isset($companyUsers) && $companyUsers != null)
                 @foreach($companyUsers as $user)
-                <div class="swiper-slide">
+                <div class="swiper-slide video-user" data-user-id="{{$user->id}}">
                     <img src="{{$user->image}}" alt="img">
                     <h3>{{$user->name}}</h3>
                 </div>
@@ -114,7 +122,8 @@
         <div class="videos row mt-4" style="row-gap:1.2rem;">
             @if(isset($companyVideoReplies) && $companyVideoReplies != null)
             @foreach($companyVideoReplies as $companyVideo)
-            <div class="col-12 col-md-4 col-lg-3">
+            {{-- {{dd($companyVideo)}} --}}
+            <div class="col-12 col-md-4 col-lg-3 replied-videos" data-user-id="{{$companyVideo->user_id}}">
                 <video controls poster="{{$companyVideo['thumbnail']}}" data-video-id="{{$companyVideo['id']}}">
                     <source src="{{$companyVideo['video_path']}}">
                 </video>
@@ -123,7 +132,7 @@
                         <img src="{{$companyVideo['user']['image']}}" alt="img">
                         <div>
                             <h3>{{$companyVideo['user']['name']}}</h3>
-                            <span>Day 1 <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">cx</span></span>
+                            <span>Day 1 <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">{{$companyVideo->video->daily_video_types}}</span></span>
                         </div>
                     </div>
                     @if($companyVideo['is_watched'] == 1)
@@ -161,6 +170,20 @@
                 }
             });
         });
+
+        // Filter videos on the basis of user
+        $(".video-user").on("click", function(e) {
+            e.preventDefault();
+            let user_id = $(this).data('user-id'); 
+            if(user_id == 0){
+                $(".replied-videos").show();
+                return;
+            }
+            let videos = $(".replied-videos").filter(`[data-user-id='${user_id}']`);
+            $(".replied-videos").hide();
+            videos.show();
+        });
+
     });
 </script>
 <script>
