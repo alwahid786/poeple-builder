@@ -21,6 +21,6 @@ class IsCompany
                 return $next($request);
             }
         }
-        return redirect('company-login')->with('error','You have not company access');
+        return redirect()->back()->with('error','You have not company access');
     }
 }

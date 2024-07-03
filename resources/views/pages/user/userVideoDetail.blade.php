@@ -5,8 +5,9 @@
         <div class="container-fluid">
             <div class="video-play-container ">
                 <div class="video-play video-wrapper custom-video-modal">
-                    <video controls>
-                        <source src="{{ asset('assets/videos/dummy.mp4') }}" type="video/mp4">
+
+                    <video controls poster="{{$video->thumbnail}}" data-video-id="{{$video->id}}">
+                        <source src="{{$video->video_path}}">
                     </video>
                     <div class="video-size-wrapper">
                         <button class="video-size-toggler">16:9</button>

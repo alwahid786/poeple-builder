@@ -85,6 +85,19 @@ class AdminController extends Controller
     // user Login Form
     public function userLoginForm()
     {
+        if(auth()->user()){
+            switch (auth()->user()->user_type) {
+                case 'user':
+                    return redirect('user-dashboard');
+                case 'company':
+                    return redirect('company-dashboard');
+                case 'admin':
+                    return redirect('dashboard');
+                default:
+                    Auth::logout();
+                    return redirect()->route('user.login')->with('error', 'Invalid user type.');
+            }
+        }
         return view('pages.user.login');
     }
 
@@ -174,9 +187,12 @@ class AdminController extends Controller
     {
         return view('pages.superadmin.adminUpdatePassword');
     }
+
+
     // User Login Function
     public function userLoginPostReq(Request $request)
     {
+        $user_type = null;
         if ($request->isMethod('post')) {
             try {
                 $validator = Validator::make($request->all(), [
@@ -184,79 +200,38 @@ class AdminController extends Controller
                     'password' => 'required',
                 ]);
                 if ($validator->fails()) {
-                    return redirect()->route('user.login')->with('error', implode(',', $validator->errors()->all()));
+                    return redirect()->route('user.login')->withInput()->with('error', implode(',', $validator->errors()->all()));
                 }
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'user'])) {
-                    $user_status = auth()->user()->status;
-                    if ($user_status != 0) {
-                        return redirect('user-dashboard')->with('success', 'You have logged in successfully.');
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                    $user = auth()->user();
+
+                    if ($user->status != 0) {
+                        switch ($user->user_type) {
+                            case 'user':
+                                return redirect('user-dashboard')->with('success', 'You have logged in successfully.');
+                            case 'company':
+                                return redirect('company-dashboard')->with('success', 'You have logged in successfully.');
+                            case 'admin':
+                                return redirect('dashboard')->with('success', 'You have logged in successfully.');
+                            default:
+                                Auth::logout();
+                                return redirect()->route('user.login')->withInput()->with('error', 'Invalid user type.');
+                        }
                     } else {
                         Auth::logout();
-                        return redirect()->route('user.login')->with('error', 'Your request is pending for approval. Please contact your company for further assistance.');
+                        return redirect()->route('user.login')->withInput()->with('error', 'Your request is pending for approval. Please contact your company for further assistance.');
                     }
                 } else {
-                    return redirect()->route('user.login')->with('error', 'wrong credientials');
+                    return redirect()->route('user.login')->withInput()->with('error', 'Wrong credentials');
                 }
+
             } catch (\Exception $e) {
-                return redirect()->route('user.login')->with('error', $e->getMessage());
+                return redirect()->route('user.login')->withInput()->with('error', $e->getMessage());
             }
         }
     }
 
-    // Company Login Function
-    public function companyLogin(Request $request)
-    {
 
-        if ($request->isMethod('post')) {
-            try {
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email',
-                    'password' => 'required',
-                ]);
-                if ($validator->fails()) {
-                    return redirect()->route('company.login')->with('error', implode(',', $validator->errors()->all()));
-                }
-
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'company'])) {
-
-                    return redirect('company-dashboard')->with('success', 'You have logged in successfully.');
-                } else {
-                    return redirect()->route('company.login')->with('error', 'wrong credientials');
-                }
-            } catch (\Exception $e) {
-                return redirect()->route('company.login')->with('error', $e->getMessage());
-            }
-        }
-
-        return view('pages.company.login');
-    }
-
-    // Admin Login Function
-    public function adminLogin(Request $request)
-    {
-
-        if ($request->isMethod('post')) {
-            try {
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email',
-                    'password' => 'required',
-                ]);
-                if ($validator->fails()) {
-                    return redirect()->route('admin.login')->with('error', implode(',', $validator->errors()->all()));
-                }
-
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'admin'])) {
-                    return redirect('dashboard')->with('success', 'You have logged in successfully.');
-                } else {
-                    return redirect()->route('admin.login')->with('error', 'wrong credientials');
-                }
-            } catch (\Exception $e) {
-                return redirect()->route('admin.login')->with('error', $e->getMessage());
-            }
-        }
-
-        return view('pages.superadmin.login');
-    }
 
     // Dashboard Function
     public function dashboard(Request $request)

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdmin
+class IsUser
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if(auth()->user() != null) {
-            if(auth()->user()->user_type == 'admin'){
+            if(auth()->user()->user_type == 'user'){
                 return $next($request);
             }
         }
-        return redirect()->back()->with('error','You have not admin access');
+        return redirect()->back()->with('error','You have not user access');
     }
 }

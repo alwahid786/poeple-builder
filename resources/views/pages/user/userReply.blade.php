@@ -71,7 +71,7 @@
                 <div class="controls">
                     <div class="controls-btn">
                         <button id="start" class="d-none">Start</button>
-                        <button class="pause-btn">
+                        <button class="pause-btn d-none">
                             <img id="pause" disabled src="{{ asset('assets/images/pause.png') }}" alt="" />
                         </button>
                         <button class="stop-btn">
@@ -183,7 +183,7 @@
                 combinedStream.addTrack(audioStream.getAudioTracks()[0]);
 
                 videoElement.srcObject = combinedStream;
-
+                videoElement.muted = true; 
                 mediaRecorder = new MediaRecorder(combinedStream);
 
                 mediaRecorder.ondataavailable = (event) => {

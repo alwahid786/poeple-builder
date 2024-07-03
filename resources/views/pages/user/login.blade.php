@@ -20,7 +20,7 @@
                 @endif
                 <div class="form-field mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" />
+                    <input type="email" name="email" value="{{old('email')}}" />
                 </div>
                 <div class="form-field mb-3">
                     <label>Password</label>
