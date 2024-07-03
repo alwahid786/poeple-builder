@@ -25,4 +25,8 @@ class CompanyVideo extends Model
     public function wathedVideo(){
         return $this->hasOne(WatchedVideo::class, 'video_id');
     }
+
+
+
+    
 }
