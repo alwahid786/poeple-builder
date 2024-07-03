@@ -363,7 +363,7 @@ class UserController extends Controller
             // 'day'=>$day
         ]);
         return $this->sendResponse('Your reply has been added successfully. Now Play for Prizes!');
-    }c
+    }
 
     public function GetDay()
     {
