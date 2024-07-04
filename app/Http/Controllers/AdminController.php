@@ -721,3 +721,4 @@ class AdminController extends Controller
         return view('pages.superadmin.adminRewardDetail');
     }
 }
+

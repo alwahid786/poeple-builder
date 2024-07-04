@@ -112,7 +112,7 @@ class UserController extends Controller
         return view('pages.user.update-password');
     }
 
-    
+
     public function  rewardSpinner()
     {
         $rewardData = $this->rewardAccess($this->GetDay());

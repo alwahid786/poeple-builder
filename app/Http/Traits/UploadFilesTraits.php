@@ -3,7 +3,6 @@
 namespace App\Http\Traits;
 
 use App\Models\CompanyVideo;
-use App\Models\Category;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Validator;
 

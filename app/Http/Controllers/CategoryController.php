@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\{Category,User};
 use Illuminate\Support\Facades\Validator;
 
 
@@ -96,7 +96,12 @@ class CategoryController extends Controller
     {
         try {
             $record = Category::findOrFail($id);
-            $record->delete();
+            $category_name = $record->name;
+
+            $category_users = User::where("daily_video_types","LIKE","%".$category_name."%")->get();
+            dd($category_users);
+            // $record->delete();
+
             return redirect()->back()->with('success', 'Category Deleted Successfully.');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', $ex->getMessage());
