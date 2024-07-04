@@ -33,36 +33,14 @@
           <p>{{$stats['total_users']}}</p>
         </div>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
-        <div class="stat-card-wrapper">
-          <h1>Gratitude Share Videos</h1>
-          <p>{{$stats['gratitude_videos']}}</p>
+      @foreach ($stats['categories'] as $category)
+        <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
+            <div class="stat-card-wrapper">
+            <h1>{{$category->name}} Videos</h1>
+            <p>{{$category->videos()->count()}}</p>
+            </div>
         </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
-        <div class="stat-card-wrapper">
-          <h1>Win Share Videos</h1>
-          <p>{{$stats['win_videos']}}</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
-        <div class="stat-card-wrapper">
-          <h1>WOW Share Videos</h1>
-          <p>{{$stats['wow_videos']}}</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
-        <div class="stat-card-wrapper">
-          <h1>CX Tip Videos</h1>
-          <p>{{$stats['cxtip_videos']}}</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 my-2 stat-card-wrapper-outer">
-        <div class="stat-card-wrapper">
-          <h1>Sales Tip Videos</h1>
-          <p>{{$stats['salestip_videos']}}</p>
-        </div>
-      </div>
+      @endforeach
     </div>
 
     <div class="row">
@@ -121,10 +99,6 @@
         </div>
 
       </div>
-
-
-
-
 
     </div>
 
