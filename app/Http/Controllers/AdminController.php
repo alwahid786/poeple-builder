@@ -21,7 +21,6 @@ use App\Models\TermsAndConditions;
 use App\Models\RepliedVideoViews;
 use App\Models\UserAward;
 use App\Models\UserReply;
-use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
@@ -268,7 +267,11 @@ class AdminController extends Controller
         $data['total_companies'] = User::where('user_type', 'company')->count();
         $data['total_users'] = User::where('user_type', 'user')->count();
         $data['total_videos'] = CompanyVideo::count();
-        $data['categories'] = Category::get();
+        $data['gratitude_videos'] = CompanyVideo::where('daily_video_types', 'Gratitude Share')->count();
+        $data['wow_videos'] = CompanyVideo::where('daily_video_types', 'WOW Share')->count();
+        $data['win_videos'] = CompanyVideo::where('daily_video_types', 'WIN Share')->count();
+        $data['cxtip_videos'] = CompanyVideo::where('daily_video_types', 'CX Tip')->count();
+        $data['salestip_videos'] = CompanyVideo::where('daily_video_types', 'Sales Tip')->count();
         return $data;
     }
 
@@ -529,7 +532,6 @@ class AdminController extends Controller
         $count = ($request->count ?? $data['videoCounts']['max']) - 1;
         $data['d_no'] = $count + 1;
         $data['videos'] = $this->getVideos($count);
-        $data['all_categories'] = Category::get()->pluck("name")->toArray();
         if ($request->ajax()) {
             return response()->json(view('pages.superadmin.partial-videos', $data)->render());
         }

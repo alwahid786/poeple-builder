@@ -38,15 +38,6 @@
                 </a>
             </li>
             <li
-            class="{{ request()->is('category*') || request()->is('category/*') ? 'active' : '' }}">
-            <a href="{{ url('/category') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#404040" class="bi bi-list-ul" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-                  </svg>
-                <span>Categories</span>
-            </a>
-            </li>
-            <li
                 class="{{ request()->is('admin-video') || request()->is('create-video') || request()->is('create-video/*') || request()->is('admin-video-detail/*') ? 'active' : '' }}">
                 <a href="{{ url('/admin-video') }}">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"

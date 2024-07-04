@@ -28,12 +28,18 @@
                     <div class="tab-box-two tab-hide-two videocard" data-no="{{$count+1}}">
                         <h1>Day {{$count+1}}</h1>
                         <ul class="mark-type">
-                            @foreach ($all_categories as $category_name)
-                                <li>
-                                    <img src="{{ asset('assets/images/' . (isset($videoCounts['categories'][$category_name]) && $videoCounts['categories'][$category_name] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />
-                                    {{$category_name}}
-                                </li>
-                            @endforeach
+                            <li>
+                                <img src="{{ asset('assets/images/' . (isset($videoCounts['categories']['Gratitude Share']) && $videoCounts['categories']['Gratitude Share'] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />
+                                Gratitude Share
+                            </li>
+                            <li>
+                                <img src="{{ asset('assets/images/' . (isset($videoCounts['categories']['WIN Share']) && $videoCounts['categories']['WIN Share'] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />
+                                WIN Share
+                            <li><img src="{{ asset('assets/images/' . (isset($videoCounts['categories']['WOW Share']) && $videoCounts['categories']['WOW Share'] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />WOW Share</li>
+                            <li><img src="{{ asset('assets/images/' . (isset($videoCounts['categories']['CX Tip']) && $videoCounts['categories']['CX Tip'] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />CX Tip</li>
+                            <li>
+                                <img src="{{ asset('assets/images/' . (isset($videoCounts['categories']['Sales Tip']) && $videoCounts['categories']['Sales Tip'] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />Sales Tip
+                            </li>
                         </ul>
                 </div>
                 @endfor

@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('delete-video/{id}', [AdminController::class, 'deleteVideo']);
         Route::get('admin-video-detail/{id}', [AdminController::class, 'adminVideoDetail']);
         Route::get('admin-logout', [AdminController::class, 'adminLogout']);
-        Route::resource('category', CategoryController::class);
     });
 
     Route::get('user-logout', [AdminController::class, 'userLogout']);
@@ -91,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('accept-user-status', [CompanyController::class, 'acceptUserStatus'])->name('accept-user-status');
         Route::get('company-logout', [AdminController::class, 'companyLogout']);
     });
-
+        
     // user
     Route::group(['middleware' => ['isUser']], function () {
         Route::get('/user-feed', [AdminController::class, 'feed'])->name('user.feed');
