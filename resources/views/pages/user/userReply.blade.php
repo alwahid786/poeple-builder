@@ -71,7 +71,7 @@
                 <div class="controls">
                     <div class="controls-btn">
                         <button id="start" class="d-none">Start</button>
-                        <button class="pause-btn d-none">
+                        <button class="pause-btn">
                             <img id="pause" disabled src="{{ asset('assets/images/pause.png') }}" alt="" />
                         </button>
                         <button class="stop-btn">

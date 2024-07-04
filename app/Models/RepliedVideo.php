@@ -13,7 +13,8 @@ class RepliedVideo extends Model
         'video_id',
         'video_path',
         'user_id',
-        'thumbnail'
+        'thumbnail',
+        'day'
     ];
 
     public function user(){

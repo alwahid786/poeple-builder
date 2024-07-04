@@ -132,7 +132,7 @@
                         <img src="{{$companyVideo['user']['image']}}" alt="img">
                         <div>
                             <h3>{{$companyVideo['user']['name']}}</h3>
-                            <span>Day 1 <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">{{$companyVideo->video->daily_video_types}}</span></span>
+                            <span>Day {{$companyVideo->day}} <span style="background-color:#0199db; border-radius:3px;color:white;padding:0px 3px;">{{$companyVideo->video->daily_video_types}}</span></span>
                         </div>
                     </div>
                     @if($companyVideo['is_watched'] == 1)

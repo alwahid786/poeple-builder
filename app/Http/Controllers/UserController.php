@@ -111,6 +111,8 @@ class UserController extends Controller
     {
         return view('pages.user.update-password');
     }
+
+    
     public function  rewardSpinner()
     {
         $rewardData = $this->rewardAccess($this->GetDay());
@@ -340,7 +342,6 @@ class UserController extends Controller
         }
         $day = $this->GetDay();
 
-
         // $reply = UserReply::whereDate('created_at', now())
         //     ->where('user_id', $data['user_id'])
         //     ->updateOrCreate([
@@ -358,7 +359,7 @@ class UserController extends Controller
             'video_path' => $data['video_path'],
             'user_id' => $data['user_id'],
             'thumbnail' => $data['thumbnail'],
-            // 'day'=>$day
+            'day'=>$day
         ]);
         return $this->sendResponse('Your reply has been added successfully. Now Play for Prizes!');
     }
