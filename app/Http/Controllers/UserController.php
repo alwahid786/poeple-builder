@@ -155,8 +155,6 @@ class UserController extends Controller
 
         return view('pages.user.spinner-reward', $data);
     }
-
-
     public function userVideoDetail(Request $request, $id)
     {
         try {
@@ -363,7 +361,7 @@ class UserController extends Controller
             // 'day'=>$day
         ]);
         return $this->sendResponse('Your reply has been added successfully. Now Play for Prizes!');
-    }c
+    }
 
     public function GetDay()
     {
