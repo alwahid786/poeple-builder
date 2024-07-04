@@ -155,8 +155,6 @@ class UserController extends Controller
 
         return view('pages.user.spinner-reward', $data);
     }
-
-
     public function userVideoDetail(Request $request, $id)
     {
         try {
