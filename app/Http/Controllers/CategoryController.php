@@ -97,13 +97,22 @@ class CategoryController extends Controller
         try {
             $record = Category::findOrFail($id);
             $category_name = $record->name;
-
-            $category_users = User::where("daily_video_types","LIKE","%".$category_name."%")->get();
-            dd($category_users);
-            // $record->delete();
-
+        
+            $category_users = User::where("daily_video_types", "LIKE", "%" . $category_name . "%")->get();
+        
+            foreach ($category_users as $user) {
+                $videoTypes = explode(',', $user->daily_video_types);
+                $updatedVideoTypes = array_filter($videoTypes, function ($videoType) use ($category_name) {
+                    return trim($videoType) !== $category_name;
+                });
+        
+                $user->daily_video_types = implode(',', $updatedVideoTypes);
+                $user->save();
+            }
+        
+            $record->delete();
             return redirect()->back()->with('success', 'Category Deleted Successfully.');
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return redirect()->back()->with('error', $ex->getMessage());
         }
     }
