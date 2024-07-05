@@ -560,6 +560,7 @@ class AdminController extends Controller
             $data['d_no'] = $_GET['dn'] ?? '';
         }
         $data['videoCounts'] = $this->getTotalMaxVideos();
+        $data['all_categories'] = Category::get()->pluck("name")->toArray();
         return view('pages.superadmin.adminVideoCreate', $data);
     }
 
@@ -723,3 +724,4 @@ class AdminController extends Controller
         return view('pages.superadmin.adminRewardDetail');
     }
 }
+
