@@ -24,9 +24,9 @@ $exclude = '';
                                 <h1>Day {{$count+1}}</h1>
                                 <ul class="mark-type">
                                     @foreach ($all_categories as $category_name)
-                                        <li>
+                                             <li>
                                             <img src="{{ asset('assets/images/' . (isset($videoCounts['categories'][$category_name]) && $videoCounts['categories'][$category_name] >= $count+1 ? 'check.png' : 'remove.png')) }}" alt="" />
-                                            {{$category_name}}
+                                                 {{$category_name}}
                                         </li>
                                     @endforeach
                                 </ul>

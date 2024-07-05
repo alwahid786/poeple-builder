@@ -55,15 +55,24 @@ body {
 }
 
 .company-logo-wrapper {
-    width: 200px;
-    min-width: 200px;
+    width: 16%;
     height: 100%;
+    padding: 8px 0 0 0;
+    display: flex;
 }
 
 .company-logo-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.company-logo-wrapper h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 8px;
 }
 
 .logo-wrapper img {

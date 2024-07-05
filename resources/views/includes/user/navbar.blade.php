@@ -1,7 +1,8 @@
 <nav>
     <div class="navbar-top">
-        <div class="company-logo-wrapper py-2">
+        <div class="company-logo-wrapper">
             <img src="{{ auth()->user()->company_logo }}" alt="" />
+             <h4>{{ auth()->user()->name }}</h4>
         </div>
         <div class="profile-wrapper">
             <img class="profile-image" src="{{ auth()->user()->image }}" alt="" />
