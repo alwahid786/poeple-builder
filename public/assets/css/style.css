@@ -59,6 +59,8 @@ body {
     height: 100%;
     padding: 8px 0 0 0;
     display: flex;
+    justify-content: center !important;
+    padding-top: 10px !important;
 }
 
 .company-logo-wrapper img {
