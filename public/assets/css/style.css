@@ -59,13 +59,13 @@ body {
     height: 100%;
     padding: 8px 0 0 0;
     display: flex;
-    justify-content: center !important;
+    justify-content: start !important;
     align-items: center;
     gap: 10px;
 }
   
 .company-logo-wrapper h6 {
-   padding-top: 10px;
+   margin: 0;
 }
 
 .company-logo-wrapper img {
