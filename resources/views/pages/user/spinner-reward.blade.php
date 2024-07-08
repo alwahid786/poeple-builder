@@ -387,6 +387,9 @@
 
     }
 
+
+
+
     const count = 300;
     var defaults;
     if (window.innerWidth > 992) {
