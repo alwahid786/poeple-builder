@@ -2,7 +2,7 @@
     <div class="navbar-top">
         <div class="company-logo-wrapper">
             <img src="{{ auth()->user()->company_logo }}" alt="" />
-             <h4>{{ auth()->user()->userCompany->name }}</h4>
+             <h6>{{ auth()->user()->userCompany->name }}</h6>
         </div>
         <div class="profile-wrapper">
             <img class="profile-image" src="{{ auth()->user()->image }}" alt="" />

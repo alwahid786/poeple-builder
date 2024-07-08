@@ -60,20 +60,22 @@ body {
     padding: 8px 0 0 0;
     display: flex;
     justify-content: center !important;
+    align-items: center;
+    gap: 10px;
+}
+  
+.company-logo-wrapper h6 {
+   padding-top: 10px;
 }
 
 .company-logo-wrapper img {
-    width: 50px !important;
-    height: 50px !important;
+    width: 45px !important;
+    height: 45px !important;
     object-fit: cover;
     border-radius: 50%;
-}
-
-.company-logo-wrapper h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 8px;
 }
 
 .logo-wrapper img {
