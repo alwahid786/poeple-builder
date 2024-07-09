@@ -7,12 +7,12 @@
     <title>Reward</title>
 </head>
 <body>
-    <h1>Hello, {{ $mail_data['name'] }}</h1>
+    <h1>Hello, {{ $name }}</h1>
 
     @if($type == 'admin' || $type == 'company')
-        The {{$mail_data['user_name']}} is rewarded by {{$mail_data['reward_price']}} on video {{$mail_data['video']}}.
+        The {{ $user_name }} is rewarded by {{ $reward_price }} on video {{ $video }}.
     @else
-        Congratulation! you are rewarded by {{$mail_data['reward_price']}}
+        Congratulations! You are rewarded by {{ $reward_price }}
     @endif
 
     <p>Thank you!</p>
