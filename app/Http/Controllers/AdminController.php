@@ -128,7 +128,7 @@ class AdminController extends Controller
             ->orderByRaw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END')
             ->select('replied_videos.*', DB::raw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END AS is_watched'))
             ->get();
-            
+
 
         }
         // dd(json_decode($companyVideoReplies));
