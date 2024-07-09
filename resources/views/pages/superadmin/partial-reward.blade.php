@@ -10,6 +10,9 @@
         <h1>Day<span class="day-number">{{$userAward['day'] ?? '-'}}</span></h1>
     </div>
     <div class="reward-table-content">
+        <h1>Video<span>{{$userAward->video->name}}</span></h1>
+    </div>
+    <div class="reward-table-content">
         <h1>Date<span>{{date("d/m/Y", strtotime($userAward['created_at'])) ?? '-'}}</span></h1>
     </div>
     <div class="reward-table-content">

@@ -229,6 +229,8 @@ class UserController extends Controller
                 $data = ["html"=>$template];
                 $sendMail = $this->sendMailTrait($template);
 
+                dd($sendMail);
+
                 if (!$sendMail) {
                     $request->session()->flash('error', 'Error sending mail');
                 }
@@ -471,7 +473,7 @@ class UserController extends Controller
             // $mail_data['video'] = $record->video->name;
 
            
-            // $admin = User::where("user_type",'admin')->first();
+            $admin = User::where("user_type",'admin')->first();
 
             // $recipients = [
             //     ['email' => auth()->user()->email, 'name' => auth()->user()->name,'type'=>'user'],
