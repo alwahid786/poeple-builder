@@ -22,9 +22,9 @@
                     Get
                     Reward
                 </a> --}}
-                <a id="reward-btn" href="{{ url('/user-video') }}" alt="">
+                {{-- <a id="reward-btn" href="{{ url('/user-video') }}" alt="">
                    Go to Reward!
-                </a>
+                </a> --}}
             </div>
             {{-- @endif --}}
             <div class="video-heading-wrapper pt-3">
