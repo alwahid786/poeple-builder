@@ -462,33 +462,33 @@ class UserController extends Controller
                 'video_id' => $request->video_id
             ]);
 
-            $mail_data = [];
+            // $mail_data = [];
 
-            $mail_data['user_name'] = auth()->user()->name;
-            $mail_data['reward_day'] = $day;
-            $mail_data['reward_price'] = round($priceValue);
-            $mail_data['company'] = auth()->user()->userCompany->name;
-            $mail_data['video'] = $record->video->name;
+            // $mail_data['user_name'] = auth()->user()->name;
+            // $mail_data['reward_day'] = $day;
+            // $mail_data['reward_price'] = round($priceValue);
+            // $mail_data['company'] = auth()->user()->userCompany->name;
+            // $mail_data['video'] = $record->video->name;
 
            
-            $admin = User::where("user_type",'admin')->first();
+            // $admin = User::where("user_type",'admin')->first();
 
-            $recipients = [
-                ['email' => auth()->user()->email, 'name' => auth()->user()->name,'type'=>'user'],
-                ['email' => $admin->email, 'name' => $admin->name,'type'=>'admin'],
-                ['email' => auth()->user()->userCompany->email, 'name' => auth()->user()->userCompany->name ,'type'=>'company']
-            ];
+            // $recipients = [
+            //     ['email' => auth()->user()->email, 'name' => auth()->user()->name,'type'=>'user'],
+            //     ['email' => $admin->email, 'name' => $admin->name,'type'=>'admin'],
+            //     ['email' => auth()->user()->userCompany->email, 'name' => auth()->user()->userCompany->name ,'type'=>'company']
+            // ];
 
-            foreach ($recipients as $recipient) {
-                $mail_data['type'] = $recipient['type'];
-                $mail_data['name'] = $recipient['name'];
+            // foreach ($recipients as $recipient) {
+            //     $mail_data['type'] = $recipient['type'];
+            //     $mail_data['name'] = $recipient['name'];
 
-                Mail::send('emails.reward', $mail_data, function ($message) use ($recipient) {
-                    $message->to($recipient['email'], $recipient['name'])
-                            ->subject('Reward');
-                    $message->from('admin@tetra.com', 'Tetra Tech');
-                });
-            }
+            //     Mail::send('emails.reward', $mail_data, function ($message) use ($recipient) {
+            //         $message->to($recipient['email'], $recipient['name'])
+            //                 ->subject('Reward');
+            //         $message->from('admin@tetra.com', 'Tetra Tech');
+            //     });
+            // }
 
 
             // return $this->sendError(implode(',', $validator->errors()->all()), 200);
