@@ -176,10 +176,20 @@ class UserController extends Controller
             $data['free_hit_avaialble'] = $rewardData['free_hit_avaialble'];
             $data['video'] = CompanyVideo::findOrFail($id);
             $data['repliedVideo'] = RepliedVideo::where([['video_id', $data['video']->id],["user_id",auth()->user()->id]])->with('user')->paginate(6);
-            $data['show_button'] = true;
-            if(UserAward::where([["user_id",auth()->user()->id],["video_id",$id]])->first()){
+            // $data['show_button'] = true;
+            $hasReplied = RepliedVideo::where([['video_id', $data['video']->id], ["user_id", auth()->user()->id]])->exists();
+            $hasCollectedReward = UserAward::where([["user_id", auth()->user()->id], ["video_id", $id]])->exists();
+            // dd($hasReplied,$hasCollectedReward);
+            if (!$hasReplied || $hasCollectedReward) {
                 $data['show_button'] = false;
+            } else {
+                $data['show_button'] = true;
             }
+
+            // dd($data['show_button']);
+
+            
+
             if ($request->ajax()) {
                 return response()->json(view('pages.user.partial-replies', ['videos' => $data['repliedVideo']])->render());
             }
