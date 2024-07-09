@@ -471,7 +471,7 @@ class UserController extends Controller
             $mail_data['company'] = auth()->user()->userCompany->name;
             $mail_data['video'] = $record->video->name;
 
-            $data = ["html"=>$template];
+            // $data = ["html"=>$template];
             $admin = User::where("user_type",'admin')->first();
 
             $recipients = [
