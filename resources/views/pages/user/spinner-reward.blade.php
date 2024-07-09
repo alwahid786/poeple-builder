@@ -251,7 +251,7 @@
                         spinSound.play();
                         run();
                         setTimeout(function() {
-                            window.location.href = window.location.href;
+                            window.location.href = "{{url('user-video')}}";
                         }, 6000)
                     })
                     run();
@@ -280,8 +280,8 @@
 
                 }, 3000);
                 setTimeout(function() {
-                    window.location.href = window.location.href;
-                }, 7000);
+                    window.location.href = "{{url('user-video')}}";
+                }, 4000);
             }
         }, 5000);
     }
@@ -344,21 +344,21 @@
 
             // update user spin
 
-            $.ajax({
-                url: "{{ url('add-award') }}",
-                type: 'GET',
-            data: {
-                free_hit_avaialble: @json($free_hit_avaialble)
-            },
-                dataType: 'json',
-                success: function(data) {
+            // $.ajax({
+            //     url: "{{ url('add-award') }}",
+            //     type: 'GET',
+            // data: {
+            //     free_hit_avaialble: @json($free_hit_avaialble),
+            // },
+            //     dataType: 'json',
+            //     success: function(data) {
 
-                },
-                error: function(data) {
-                    console.log('error');
-                }
+            //     },
+            //     error: function(data) {
+            //         console.log('error');
+            //     }
 
-            })
+            // })
         });
     });
 
@@ -368,7 +368,8 @@
             type: 'GET',
             data: {
                 awardType: awardType,
-                free_hit_avaialble: @json($free_hit_avaialble)
+                free_hit_avaialble: @json($free_hit_avaialble),
+                video_id:'{{request()->video_id}}'
             },
             dataType: 'json',
             success: function(data) {

@@ -108,6 +108,7 @@ class AdminController extends Controller
         $companyId = auth()->user()->added_by;
         $company = User::with('companyUsers')->find($companyId);
         $companyUsers = User::where('added_by', $companyId)->get();
+
         $companyVideoReplies = collect();
 
         // if ($companyUsers->isNotEmpty()) {
@@ -118,14 +119,17 @@ class AdminController extends Controller
         // }
         if ($companyUsers->isNotEmpty()) {
             $userIds = $companyUsers->pluck('id')->toArray();
+
             $companyVideoReplies = RepliedVideo::with('user')
-            ->leftJoin('replied_video_views', function ($join) use ($userIds) {
-                $join->on('replied_videos.id', '=', 'replied_video_views.reply_video_id')
-                ->whereIn('replied_video_views.user_id', $userIds);
+            ->leftJoin('replied_video_views', function ($join) {
+                $join->on('replied_videos.id', '=', 'replied_video_views.reply_video_id');
             })
-                ->orderByRaw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END')
-                ->select('replied_videos.*', DB::raw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END AS is_watched'))
-                ->get();
+            ->whereIn('replied_videos.user_id', $userIds)
+            ->orderByRaw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END')
+            ->select('replied_videos.*', DB::raw('CASE WHEN replied_video_views.id IS NULL THEN 0 ELSE 1 END AS is_watched'))
+            ->get();
+            
+
         }
         // dd(json_decode($companyVideoReplies));
         return view('pages.user.feed', compact('company', 'companyUsers', 'companyVideoReplies'));

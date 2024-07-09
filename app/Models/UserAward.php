@@ -15,7 +15,8 @@ class UserAward extends Model
         'reward_type',
         'price',
         'company_id',
-        'spin_type'
+        'spin_type',
+        'video_id'
     ];
 
     public function award(){
