@@ -58,6 +58,8 @@ class UserController extends Controller
             return redirect('user-dashboard')->with('error', 'Invalid Request.');
         }
         $data['video'] = $todayVideo;
+        $rewardData = $this->rewardAccess($day);
+        $data['free_hit_avaialble'] = $rewardData['free_hit_avaialble'];        
         return view('pages.user.userReply', $data);
     }
 
@@ -115,6 +117,12 @@ class UserController extends Controller
 
     public function  rewardSpinner()
     {
+
+        if(UserAward::where([["user_id",auth()->user()->id],["video_id",request()->video_id]])->first()){
+            return redirect('user-video')->with("error","Sorry! Reward already collected.");
+        }
+
+
         $rewardData = $this->rewardAccess($this->GetDay());
         // Temporary comment, uncomment atfer testing
         // if(!$rewardData['is_show_reward']){
@@ -130,38 +138,47 @@ class UserController extends Controller
         ];
         $companyId = auth()->user()->added_by;
         $counts = UserAward::where('company_id', $companyId)
-    ->groupBy('reward_type')
-    ->selectRaw('reward_type, count(*) as count')
-    ->pluck('count', 'reward_type');
+        ->groupBy('reward_type')
+        ->selectRaw('reward_type, count(*) as count')
+        ->pluck('count', 'reward_type');
 
-    // check grand prize
-    if(isset($counts['grand_prize']) && $counts['grand_prize'] > 0){
-        $data['awards'][] = asset('assets/images/rewards/empty_3.png');
-    }else{
-        $data['awards'][] = auth()->user()->company_logo;
-    }
+        // check grand prize
+        if(isset($counts['grand_prize']) && $counts['grand_prize'] > 0){
+            $data['awards'][] = asset('assets/images/rewards/empty_3.png');
+        }else{
+            $data['awards'][] = auth()->user()->company_logo;
+        }
 
-    // check super prizes
-    if(isset($counts['super_prize']) && $counts['super_prize'] > 2){
-        $data['awards'][] = asset('assets/images/rewards/empty_6.png');
-    }else{
-        $data['awards'][] = asset('assets/images/rewards/super_prize.png');
-    }
+        // check super prizes
+        if(isset($counts['super_prize']) && $counts['super_prize'] > 2){
+            $data['awards'][] = asset('assets/images/rewards/empty_6.png');
+        }else{
+            $data['awards'][] = asset('assets/images/rewards/super_prize.png');
+        }
 
-    // check other prizes
-    if(isset($counts['other_prize']) && $counts['other_prize'] > 3){
-        $data['awards'][] = asset('assets/images/rewards/empty_5.png');
-    }else{
-        $data['awards'][] = asset('assets/images/rewards/other_prize.png');
-    }
+        // check other prizes
+        if(isset($counts['other_prize']) && $counts['other_prize'] > 3){
+            $data['awards'][] = asset('assets/images/rewards/empty_5.png');
+        }else{
+            $data['awards'][] = asset('assets/images/rewards/other_prize.png');
+        }
 
         return view('pages.user.spinner-reward', $data);
     }
     public function userVideoDetail(Request $request, $id)
     {
         try {
+
+            $day = $this->GetDay();
+            $data['day'] = $day;
+            $rewardData = $this->rewardAccess($day);
+            $data['free_hit_avaialble'] = $rewardData['free_hit_avaialble'];
             $data['video'] = CompanyVideo::findOrFail($id);
             $data['repliedVideo'] = RepliedVideo::where([['video_id', $data['video']->id],["user_id",auth()->user()->id]])->with('user')->paginate(6);
+            $data['show_button'] = true;
+            if(UserAward::where([["user_id",auth()->user()->id],["video_id",$id]])->first()){
+                $data['show_button'] = false;
+            }
             if ($request->ajax()) {
                 return response()->json(view('pages.user.partial-replies', ['videos' => $data['repliedVideo']])->render());
             }
@@ -419,19 +436,30 @@ class UserController extends Controller
                 }
             }
             $day = $this->GetDay();
-            UserAward::updateOrCreate(
-                [
-                    'user_id' => auth()->user()->id,
-                    'day' => $day,
-                    'spin_type' => $request->free_hit_avaialble ?? 0
-                ],
-                [
-                    'reward_type' => $request->awardType ?? null,
-                    'price' => round($priceValue) ?? null,
-                    'company_id' => auth()->user()->added_by,
-                    'spin_type' => $request->free_hit_avaialble ?? 0
-                ]
-            );
+            // UserAward::updateOrCreate(
+            //     [
+            //         'user_id' => auth()->user()->id,
+            //         'day' => $day,
+            //         'spin_type' => $request->free_hit_avaialble ?? 0
+            //     ],
+            //     [
+            //         'reward_type' => $request->awardType ?? null,
+            //         'price' => round($priceValue) ?? null,
+            //         'company_id' => auth()->user()->added_by,
+            //         'spin_type' => $request->free_hit_avaialble ?? 0,
+            //         'video_id'=>$request->video_id
+            //     ]
+            // );
+            UserAward::create([
+                'user_id' => auth()->user()->id,
+                'day' => $day,
+                'spin_type' => $request->free_hit_avaialble ?? 0,
+                'reward_type' => $request->awardType ?? null,
+                'price' => round($priceValue) ?? null,
+                'company_id' => auth()->user()->added_by,
+                'video_id' => $request->video_id
+            ]);
+            
             // return $this->sendError(implode(',', $validator->errors()->all()), 200);
             return $this->sendResponse('Award data.', $priceValue);
         } catch (Exception $ex) {

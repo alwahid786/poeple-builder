@@ -18,9 +18,13 @@
             {{-- Temporary comment if condition, uncomment after testing}}
             {{-- @if ($is_show_reward) --}}
             <div class="reward-button-wrapper text-right">
-                <a id="reward-btn" href="{{ url('/reward') }}?ft={{ base64_encode($free_hit_avaialble) }}" alt="">
+                {{-- <a id="reward-btn" href="{{ url('/reward') }}?ft={{ base64_encode($free_hit_avaialble) }}" alt="">
                     Get
-                    Reward</a>
+                    Reward
+                </a> --}}
+                <a id="reward-btn" href="{{ url('/user-video') }}" alt="">
+                   Go to Reward!
+                </a>
             </div>
             {{-- @endif --}}
             <div class="video-heading-wrapper pt-3">

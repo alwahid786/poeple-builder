@@ -35,8 +35,19 @@
                 </div>
 
             </div>
+
             <div class="video-replies-container pt-3">
-                <h1 class="video-replies-heading">People Replies</h1>
+                <div class="d-flex justify-content-between">
+                    <h1 class="video-replies-heading">People Replies</h1>
+                    @if ($show_button)
+                       <div class="reward-button-wrapper">
+                           <a id="reward-btn" href="{{ url('/reward') }}?ft={{ base64_encode($free_hit_avaialble) }}&video_id={{request()->id}}">
+                             Get Reward
+                           </a>      
+                       </div>   
+                    @endif
+                
+                </div>
                 <div id="partial-replies">
                     @include('pages.user.partial-replies', ['videos' => $repliedVideo])
                 </div>

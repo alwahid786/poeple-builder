@@ -307,7 +307,7 @@
                                     icon: "success",
                                 })
                                 .then(function() {
-                                    location.href = '{{ url('user-dashboard') }}';
+                                    location.href = "{{ url('/reward') }}?ft={{ base64_encode($free_hit_avaialble) }}&video_id={{request()->id}}";
                                 });
                         } else {
                             swal({
