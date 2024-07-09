@@ -25,4 +25,8 @@ class UserAward extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function video(){
+        return $this->belongsTo(CompanyVideo::class,"video_id","id");
+    }
 }
