@@ -464,14 +464,12 @@ class UserController extends Controller
 
             $mail_data = [];
 
-
             $mail_data['user_name'] = auth()->user()->name;
             $mail_data['reward_day'] = $day;
             $mail_data['reward_price'] = round($priceValue);
             $mail_data['company'] = auth()->user()->userCompany->name;
             $mail_data['video'] = $record->video->name;
 
-            $data = ["html"=>$template];
             $admin = User::where("user_type",'admin')->first();
 
             $recipients = [
@@ -483,12 +481,14 @@ class UserController extends Controller
             foreach ($recipients as $recipient) {
                 $mail_data['type'] = $recipient['type'];
                 $mail_data['name'] = $recipient['name'];
+
                 Mail::send('emails.reward', $mail_data, function ($message) use ($recipient) {
                     $message->to($recipient['email'], $recipient['name'])
                             ->subject('Reward');
                     $message->from('admin@tetra.com', 'Tetra Tech');
                 });
             }
+
 
             // return $this->sendError(implode(',', $validator->errors()->all()), 200);
             return $this->sendResponse('Award data.', $priceValue);
