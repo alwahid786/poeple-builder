@@ -12,7 +12,7 @@ trait MailTrait
 
         $response = Http::withHeaders([
             'accept' => 'application/json',
-            'api-key' => env('MAIL_API_KEY'),
+            'api-key' => env('MAIL_API_KEY','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'),
             'content-type' => 'application/json',
         ])->post('https://api.brevo.com/v3/smtp/email', [
             'sender' => [
