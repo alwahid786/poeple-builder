@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Mail;
 
 class UserController extends Controller
 {
@@ -208,6 +209,7 @@ class UserController extends Controller
 
                 $template = $this->helpRender($request->all());
 
+                $data = ["html"=>$template];
                 $sendMail = $this->sendMailTrait($template);
 
                 if (!$sendMail) {
