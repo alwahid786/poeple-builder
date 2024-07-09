@@ -12,7 +12,7 @@
     @if($type == 'admin' || $type == 'company')
         The {{ $user_name }} is rewarded by {{ $reward_price }} on video {{ $video }}.
     @else
-        Congratulations! You are rewarded by {{ $reward_price }}
+        Congratulations! You are rewarded by {{ $reward_price }} on video {{ $video }}.
     @endif
 
     <p>Thank you!</p>
