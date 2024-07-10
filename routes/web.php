@@ -132,3 +132,8 @@ Route::get('/home-two', function () {
 
 // send mail box money
 Route::any('mailbox-money', [WebsiteController::class, 'MailBoxForm'])->name('send.mailbox');
+
+
+Route::get("ip",function(){
+dd(request()->ip());
+});

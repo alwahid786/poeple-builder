@@ -7,17 +7,17 @@ trait MailTrait
 {
 
 
-    public function sendMailTrait($template, $email = 'tayyebkodex@gmail.com', $subject = 'Help Email')
+    public function sendMailTrait($template, $email = 'arslanrajput386@gmail.com', $subject = 'Help Email')
     {
 
         $response = Http::withHeaders([
             'accept' => 'application/json',
-            'api-key' => env('MAIL_API_KEY','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'),
+            'api-key' => env('MAIL_API_KEY','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'),
             'content-type' => 'application/json',
         ])->post('https://api.brevo.com/v3/smtp/email', [
             'sender' => [
                 'name' => 'People Builder',
-                'email' => 'mubeen.kodex@gmail.com',
+                'email' => 'arslanrajput386@gmail.com',
             ],
             'to' => [
                 [
