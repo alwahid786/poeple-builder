@@ -67,7 +67,7 @@ class CompanyImport implements ToModel, WithHeadingRow,  WithValidation
             'email' => 'required|email',
             'location' => 'required|max:255',
             'bio' => 'required|max:255',
-            'image' => 'required|url'
+            'image' => 'nullable|url'
             // Add rules for other columns...
         ];
     }
