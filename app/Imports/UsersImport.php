@@ -61,7 +61,7 @@ class UsersImport implements ToModel, WithHeadingRow,  WithValidation
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone_number' => 'required|max:100',
-            'image' => 'required|url'
+            'image' => 'nullable|url'
         ];
     }
 }
