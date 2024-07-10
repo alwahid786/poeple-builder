@@ -592,6 +592,13 @@ class AdminController extends Controller
             $data = $request->all();
             $data['user_id'] = auth()->user()->id;
             if ($request->file('video')) {
+
+                $video = $request->file('video');
+                // Check if the file size exceeds 10MB
+                if ($video->getSize() > 10 * 1024 * 1024) {
+                    return redirect()->back()->withInput()->with('error','The uploaded video exceeds the maximum allowed size of 10MB');
+                }
+
                 $data['video_path'] = $this->uploadSingleFile($request->file('video'))['path'];
                 $base64Image = $request->thumbnail_field;
                 $data['thumbnail'] = $this->uplaodThumbnail($base64Image);
