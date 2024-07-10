@@ -238,7 +238,7 @@ class UserController extends Controller
                 $data = ["html"=>$template];
                 $sendMail = $this->sendMailTrait($template);
 
-                dd($sendMail);
+                // dd($sendMail);
                 if (!$sendMail) {
                     $request->session()->flash('error', 'Error sending mail');
                 }
