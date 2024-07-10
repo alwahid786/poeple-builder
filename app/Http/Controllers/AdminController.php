@@ -246,6 +246,7 @@ class AdminController extends Controller
             $users = $users->where(function ($query) use ($request) {
                 $query->where("name", "like", "%" . $request->search . "%");
                 $query->orWhere("email", "like", "%" . $request->search . "%");
+                $query->orWhere("daily_video_types", "like", "%" . $request->search . "%");
             });
         }
         if ($request->has('dailyTypes') && !empty($request->dailyTypes)) {

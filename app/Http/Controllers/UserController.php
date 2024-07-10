@@ -68,7 +68,6 @@ class UserController extends Controller
     {
         $data['videoCounts'] = $this->getTotalMaxVideos();
         $data['user_types'] = explode(',', User::where('id', auth()->user()->added_by)->value('daily_video_types'));
-
         $data['day'] = $this->GetDay();
         $day = $request->count ?? ($data['day']);
         $data['videos'] = $this->getVideos($day - 1);
